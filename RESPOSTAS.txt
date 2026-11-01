@@ -1,0 +1,96 @@
+ATIVIDADE — RECURSÃO E PROGRAMAÇÃO DINÂMICA
+
+EXERCÍCIO 1 — FATORIAL RECURSIVO
+A relação utilizada é f(n) = n × f(n − 1), com 0! = 1 e 1! = 1.
+A condição de parada impede que as chamadas continuem indefinidamente.
+Exemplos: 3! = 6 e 7! = 5040. Entradas negativas são rejeitadas.
+
+É possível calcular um fatorial acima de 100 com recursão?
+Sim. Usando BigInteger, 101! pode ser calculado exatamente com recursão pura.
+A recursão não impõe um limite fixo de 100. Existem duas limitações distintas:
+- Capacidade numérica: int comporta até 12! e long até 20!. Acima disso,
+  multiplicações comuns nesses tipos transbordam e podem dar valores errados.
+  BigInteger permite inteiros maiores, dentro dos recursos disponíveis.
+- Pilha: cada chamada recursiva ocupa espaço. Para entradas suficientemente
+  grandes pode ocorrer StackOverflowError. O limite depende da JVM, de -Xss,
+  da compilação JIT e do ambiente; não existe um máximo universal.
+O arquivo RESULTADO_VALIDACAO.txt registra os testes efetivamente executados.
+O modo Main <n> permite repetir a sondagem em um processo separado.
+
+EXERCÍCIO 2 — TOP-DOWN E BOTTOM-UP
+Top-down: parte de n, chama os subproblemas recursivamente e guarda cada
+resultado em um mapa. O cache persiste enquanto a mesma instância existir.
+Se um resultado já estiver salvo, ele é devolvido sem repetir multiplicações.
+Uma consulta grande com cache vazio ainda exige profundidade linear de pilha.
+
+Bottom-up: começa com 0! e 1! e preenche uma lista em um laço até n.
+Não usa recursão. A tabela persiste na instância, permitindo consultar resultados
+anteriores e ampliar apenas a parte que falta. Esta versão evita o limite da
+pilha recursiva, mas continua limitada por memória e tempo disponíveis.
+
+Diferença em relação à recursão pura:
+Para uma consulta isolada, o fatorial puro não repete subproblemas: calcula
+n!, (n−1)!, ..., 1! apenas uma vez cada. Portanto, as três versões fazem
+Theta(n) multiplicações na primeira consulta com cache vazio. A memoização
+não transforma esse fatorial de exponencial em linear; ele já é linear.
+A vantagem do cache aparece em várias consultas usando a mesma instância.
+Por exemplo, depois de calcular 100!, calcular 101! exige só uma nova
+multiplicação, e consultar 100! novamente não exige multiplicações.
+A recursão pura refaz todas as multiplicações em cada consulta.
+
+Complexidades do fatorial no modelo de operações aritméticas unitárias:
+- Recursão pura: tempo Theta(n); pilha Theta(n).
+- Top-down com cache vazio: tempo esperado Theta(n), considerando acesso
+  esperado constante ao HashMap; pilha Theta(n); cache Theta(n) entradas.
+- Bottom-up com tabela inicialmente vazia de resultados além de 1!:
+  tempo Theta(n); pilha constante; tabela Theta(n) entradas.
+- Consulta já armazenada: tempo esperado O(1) no mapa e O(1) na lista,
+  devolvendo a referência ao BigInteger, sem convertê-lo para texto.
+As tabelas armazenam números crescentes: Theta(n) entradas não significa
+Theta(n) bytes. Com BigInteger, multiplicar, somar e imprimir não têm custo
+constante. As contagens acima são a análise didática de operações; o custo
+real também depende do número de bits dos operandos. A representação de n!
+tem Theta(n log n) bits; guardar todos os fatoriais até n requer, em ordem de
+grandeza, Theta(n² log n) bits para os valores.
+O valor do fatorial cresce mais rapidamente do que c^n para qualquer constante
+c positiva fixa; isso não torna exponencial o número de chamadas do algoritmo.
+
+EXERCÍCIO 3 — COMPLEXIDADE DE FIBONACCI
+Referência adotada: F(0)=0, F(1)=1; versão pura chama F(n−1) e F(n−2),
+e versão dinâmica armazena subproblemas. Os slides não foram fornecidos;
+portanto a análise usa essas implementações clássicas, incluídas no projeto.
+Se o código específico da aula for diferente, a análise deve ser conferida
+com esse código antes da entrega.
+
+Recursão pura:
+T(n) = T(n−1) + T(n−2) + Theta(1).
+O tempo é exponencial: Theta(phi^n), com phi aproximadamente 1,618.
+O(2^n) é um limite superior válido e comum, embora menos preciso.
+O espaço auxiliar da pilha é Theta(n), pois a maior cadeia tem tamanho linear.
+Há recomputação: F(5) chama F(4) e F(3), e F(4) também chama F(3).
+Isso se repete em vários níveis da árvore de chamadas.
+
+Programação dinâmica top-down:
+Cada índice de 0 a n é calculado uma vez e guardado. Há Theta(n) estados e
+trabalho constante por estado no modelo unitário. Tempo esperado Theta(n)
+com HashMap; espaço Theta(n) entradas, além da pilha Theta(n).
+
+Programação dinâmica bottom-up:
+A tabela é preenchida de 0 até n, uma vez por índice. Tempo Theta(n) e
+espaço Theta(n) entradas, sem pilha recursiva crescente. Se só o último
+resultado for necessário, é possível guardar apenas os dois anteriores,
+reduzindo para O(1) posições auxiliares; essa é uma variante adicional,
+não a versão com tabela implementada aqui.
+
+Por que programação dinâmica é melhor neste Fibonacci?
+Ela elimina a recomputação dos mesmos índices. A versão pura tem um número
+exponencial de chamadas, enquanto as versões dinâmicas calculam um número
+linear de estados. Para n grande, essa diferença é muito significativa.
+Isso é diferente do fatorial, que tem apenas uma chamada recursiva por nível.
+
+Nota sobre BigInteger em Fibonacci:
+As classificações acima contam somas como operações unitárias. F(n) tem
+Theta(n) bits. Considerando o custo linear da soma de inteiros grandes,
+a versão dinâmica faz Theta(n²) trabalho em bits; uma tabela completa
+armazena Theta(n²) bits. Mesmo nesse modelo, a vantagem em relação à
+recursão pura continua sendo muito grande.

@@ -1,0 +1,53 @@
+VALIDAÇÃO EXECUTADA EM 01/11/2026
+Ambiente: Linux, OpenJDK 17.0.20.
+Compilação: compilador javac via java com.sun.tools.javac.Main (o ambiente não tinha o executável javac no PATH).
+Fontes principais e testes compilados sem dependências externas.
+
+openjdk version "17.0.20" 2026-07-21
+OpenJDK Runtime Environment (build 17.0.20+8-1-24.04-Ubuntu)
+OpenJDK 64-Bit Server VM (build 17.0.20+8-1-24.04-Ubuntu, mixed mode, sharing)
+
+SUCESSO: 61 verificações passaram.
+
+n = 0
+Recursivo: 1
+Top-down:  1
+Bottom-up: 1
+n = 1
+Recursivo: 1
+Top-down:  1
+Bottom-up: 1
+n = 3
+Recursivo: 6
+Top-down:  6
+Bottom-up: 6
+n = 7
+Recursivo: 5040
+Top-down:  5040
+Bottom-up: 5040
+n = 20
+Recursivo: 2432902008176640000
+Top-down:  2432902008176640000
+Bottom-up: 2432902008176640000
+n = 100
+Recursivo: 93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000
+Top-down:  93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000
+Bottom-up: 93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000
+n = 101
+Recursivo: 9425947759838359420851623124482936749562312794702543768327889353416977599316221476503087861591808346911623490003549599583369706302603264000000000000000000000000
+Top-down:  9425947759838359420851623124482936749562312794702543768327889353416977599316221476503087861591808346911623490003549599583369706302603264000000000000000000000000
+Bottom-up: 9425947759838359420851623124482936749562312794702543768327889353416977599316221476503087861591808346911623490003549599583369706302603264000000000000000000000000
+Caches após consulta repetida de 101!: 102 / 102
+5000! bottom-up: 16326 dígitos
+Fibonacci(10): 55 / 55 / 55
+
+SONDAGENS DA RECURSÃO PURA — cada entrada em um processo novo, pilha padrão:
+n=101; código de saída=0; Recursivo: 101! calculado; dígitos = 160
+n=1000; código de saída=0; Recursivo: 1000! calculado; dígitos = 2568
+n=5000; código de saída=0; Recursivo: 5000! calculado; dígitos = 16326
+n=10000; código de saída=0; Recursivo: 10000! calculado; dígitos = 35660
+n=20000; código de saída=2; Limite da pilha atingido nesta JVM para a entrada informada.
+Maior entrada calculada nesta lista de sondagens: 10000.
+Esse é o maior valor testado com sucesso nesta lista, não um limite exato ou universal.
+Os resultados da sondagem dependem da JVM, pilha e compilação JIT. Execute no seu computador para observar o comportamento local.
+Bottom-up calculou 5000! e os testes confirmaram 16326 dígitos.
